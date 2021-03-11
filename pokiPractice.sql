@@ -87,3 +87,29 @@ GROUP BY e.Name
 HAVING e.Name  IS NULL;
 
 --task18
+SELECT count( e.Name), e.Name
+	FROM PoemEmotion pe
+	JOIN Emotion e on EmotionId = e.Id
+	 WHERE e.Id = (SELECT min (e.Id)
+	FROM Emotion e)
+	GROUP BY e.Name
+
+--task19
+SELECT g.Name
+FROM Grade g
+JOIN PoemEmotion pe on pe.Id = pe.PoemId
+JOIN Emotion e on EmotionId = e.Id
+WHERE g.Id = (SELECT max (g.Id)
+FROM Grade g) AND e.Id = 4
+GROUP BY g.Name
+
+--task20
+SELECT g.Name
+FROM Poem p
+JOIN PoemEmotion pe on p.Id = pe.PoemId
+ JOIN Emotion e on pe.EmotionId = e.Id
+ JOIN Author ar on p.AuthorId = ar.Id
+ JOIN Gender g on ar.GenderId = g.Id
+WHERE e.Id = 2
+GROUP BY g.Name
+ 
